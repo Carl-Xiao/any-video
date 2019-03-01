@@ -1,0 +1,214 @@
+/**
+admin下排除site元素 选择pusher子元素下的full和height元素
+ */
+
+#admin:not(.site) > .pusher > .full.height {
+    background-color: #FFFFFF;
+}
+
+#admin > .pusher > .full.height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+#admin .full.height > .toc {
+    position: fixed;
+    z-index: 1;
+    background-color: #1b1c1d;
+    width: 250px;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+
+#admin .full.height > .toc .ui.menu {
+    border-radius: 0;
+    border-width: 0 1px 0 0;
+    box-shadow: none;
+    margin: 0;
+    width: inherit;
+    overflow: hidden;
+    will-change: transform;
+    max-height: 100vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/**
+ 设置左边菜单
+ */
+#admin .ui.leftmenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: none;
+    transition: none;
+    will-change: transform;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: hidden;
+    -webkit-overflow-scrolling: touch;
+    height: 100% !important;
+    max-height: 100%;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+    z-index: 102;
+}
+
+#admin .ui.visible.leftmenu {
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+/**
+   正文部分内容数据
+ */
+#admin .fixed.menu > .container, #admin .main.container, #admin .masthead > .container, #admin .footer > .container {
+    position: relative;
+}
+
+#admin .article {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-width: 0px;
+    margin-left: 130px;
+}
+
+#admin .masthead.segment {
+    position: relative;
+    z-index: 3;
+    margin: 0em;
+    min-height: 185px;
+    padding: 3em 0em;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: none;
+}
+
+#admin .masthead > .container {
+    margin-right: 387px !important;
+}
+
+#admin .masthead > .container, #admin .main.container, #admin .fixed.menu > .container {
+    margin-left: 3em !important;
+    margin-right: 3em !important;
+    width: auto !important;
+    max-width: 960px !important;
+}
+
+#admin .masthead .introduction {
+    display: block;
+}
+
+#admin .masthead .other {
+    position: absolute;
+    left: 100%;
+    bottom: -2px;
+    top: 2px
+}
+
+#admin .masthead .other {
+    margin-left: 3em;
+    padding: 0em 1.25em;
+    width: 342px;
+}
+
+#admin .masthead .other #carbonads {
+    position: relative;
+    display: block;
+    width: auto;
+    margin: 0 auto;
+    background-color: #F5F8F9;
+    border: 1px solid #9ECAD3;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    padding: 1em;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+/***
+主要内容部分
+ */
+
+#admin .main.container {
+    margin-right: 387px !important;
+}
+
+#admin .main.container > .right.rail, #admin .main.container > .tab > .admin > .right.rail, #admin .main.container > .tab > .right.rail {
+    margin-left: 3em;
+    padding-top: 2em;
+    width: 319px;
+}
+
+#admin .main.container > .right.rail .sticky, #admin .main.container > .tab > .examples > .right.rail .sticky, #example .main.container > .tab > .right.rail .sticky {
+    padding-bottom: 2em;
+}
+
+.widget_ui_tags.items {
+    overflow: hidden;
+    padding-bottom: 12px;
+}
+
+.widget_ui_tags.items li {
+    list-style-type: none;
+    float: left;
+    font-size: 12px;
+    margin-right: 2%;
+    margin-top: 10px;
+}
+
+.widget_ui_tags.items > li > a {
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    display: block;
+    line-height: 1;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #aaa;
+    text-align: center;
+}
+
+#admin .part {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    width: 310px;
+    font-size: 1.3428571rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

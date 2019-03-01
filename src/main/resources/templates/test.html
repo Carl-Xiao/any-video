@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello WebSocket</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div style="margin: auto;text-align: center">
+    <h1>Welcome to websocket</h1>
+</div>
+<br/>
+<div style="margin: auto;text-align: center">
+    <select id="onLineUser">
+        <option>--所有--</option>
+    </select>
+    <input id="text" type="text"/>
+    <button onclick="send()">发送消息</button>
+</div>
+<br>
+<div style="margin-right: 10px;text-align: right">
+    <button onclick="closeWebSocket()">关闭连接</button>
+</div>
+<hr/>
+<div id="message" style="text-align: center;"></div>
+<input type="text" th:value="${cid}" id="username" style="display: none"/>
+
+</body>
+<script>
+    var cid = document.getElementById("username").value;
+    console.log(cid)
+    var socket;
+    if (typeof(WebSocket) == "undefined") {
+        console.log("您的浏览器不支持WebSocket");
+    } else {
+        console.log("您的浏览器支持WebSocket");
+        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+        socket = new WebSocket("ws://localhost:8080/websocket/" + cid);
+        // socket = new WebSocket("${basePath}websocket/${cid}".replace("http","ws"));
+        //打开事件
+        socket.onopen = function () {
+            console.log("Socket 已打开");
+            //socket.send("这是来自客户端的消息" + location.href + new Date());
+        };
+        //获得消息事件
+        socket.onmessage = function (evt) {
+            //发现消息进入  开始处理前端触发逻辑
+            console.log("处理消息"+evt.data);
+            var received_msg = evt.data;
+            console.log("数据已接收:" +received_msg);
+            var obj = JSON.parse(received_msg);
+            console.log("可以解析成json:"+obj.messageType);
+            //1代表上线 2代表下线 3代表在线名单 4代表普通消息
+            if(obj.messageType==1){
+                //把名称放入到selection当中供选择
+                var onlineName = obj.sid;
+                var option = "<option>"+onlineName+"</option>";
+                $("#onLineUser").append(option);
+                setMessageInnerHTML(onlineName+"上线了");
+            }
+            else if(obj.messageType==2){
+                $("#onLineUser").empty();
+                var onlineName = obj.onlineUsers;
+                var offlineName = obj.sid;
+                var option = "<option>"+"--所有--"+"</option>";
+                for(var i=0;i<onlineName.length;i++){
+                    if(!(onlineName[i]==document.getElementById('username').value)){
+                        option+="<option>"+onlineName[i]+"</option>"
+                    }
+                }
+                $("#onLineUser").append(option);
+                setMessageInnerHTML(offlineName+"下线了");
+            }
+            else if(obj.messageType==3){
+                var onlineName = obj.onlineUsers;
+                var option = null;
+                for(var i=0;i<onlineName.length;i++){
+                    if(!(onlineName[i]==document.getElementById('username').value)){
+                        option+="<option>"+onlineName[i]+"</option>"
+                    }
+                }
+                $("#onLineUser").append(option);
+                console.log("获取了在线的名单"+onlineName.toString());
+            }
+            else{
+                setMessageInnerHTML(obj.fromusername+"对"+obj.tousername+"说："+obj.textMessage);
+            }
+        };
+        //关闭事件
+        socket.onclose = function () {
+            console.log("Socket已关闭");
+        };
+        //发生了错误事件
+        socket.onerror = function () {
+            alert("Socket发生了错误");
+            //此时可以尝试刷新页面
+        }
+        //离开页面时，关闭socket
+        //jquery1.8中已经被废弃，3.0中已经移除
+        // $(window).unload(function(){
+        //     socket.close();
+        //});
+    }
+    function closeWebSocket() {
+        //直接关闭websocket的连接
+        socket.close();
+    }
+
+    /**
+     * 发送消息
+     */
+    function send() {
+        var selectText = $("#onLineUser").find("option:selected").text();
+        if(selectText=="--所有--"){
+            selectText = "All";
+        } else{
+            setMessageInnerHTML(document.getElementById('username').value+"对"+selectText+"说："+ $("#text").val());
+        }
+        var message = {
+            "message":document.getElementById('text').value,
+            "sid":document.getElementById('username').value,
+            "to":selectText
+        };
+        socket.send(JSON.stringify(message));
+        $("#text").val("");
+    }
+
+    /**
+     * 显示信息
+     *
+     */
+    function setMessageInnerHTML(innerHTML) {
+        document.getElementById('message').innerHTML += innerHTML + '<br/>';
+    }
+
+</script>
+
+
+</html>

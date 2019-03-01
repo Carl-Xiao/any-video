@@ -1,0 +1,13 @@
+.swiper-container {
+    height:300px;
+    width: 100%;
+    max-width: 1120px;
+    margin: 4em auto 2em;
+}
+.swiper-slide {
+    position: relative;
+}
+.swiper-container img {
+    width: 100%;
+    display: block;
+}

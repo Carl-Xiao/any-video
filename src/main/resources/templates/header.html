@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- following menu-->
+<div class="ui mini fixed borderless inverted menu" th:fragment="fmenu">
+    <div class="ui container">
+        <a href="/" class="header item">
+            <img class="logo" src="/static/img/bici.png">
+        </a>
+        <a href="/" class="item"><i class="home icon"></i> 首页</a>
+        <a href="/see" class="item"><i class="chess knight icon"></i>B站</a>
+        <a href="/tip" class="item"><i class="question circle icon"></i>其它</a>
+        <div class="right menu">
+            <div class="item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
