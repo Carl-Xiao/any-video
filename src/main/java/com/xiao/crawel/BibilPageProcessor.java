@@ -5,7 +5,6 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.processor.example.GithubRepoPageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
 /**
@@ -26,18 +25,21 @@ public class BibilPageProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
+        log.info("========start===========");
         Selectable selectable = page.getHtml().xpath("//script/text()");
+
         String ss = selectable.get();
+
+
         log.info(ss);
     }
-
     @Override
     public Site getSite() {
         return site;
 
     }
     public static void main(String[] args) {
-        Spider.create(new GithubRepoPageProcessor()).addUrl("https://www.bilibili.com/video/av18089528/?p=1").run();
+        Spider.create(new BibilPageProcessor()).addUrl("https://www.bilibili.com/video/av18089528/?p=1").run();
 //        Spider.create(new GithubRepoPageProcessor()).test("https://github.com/code4craft") "https://github.com/sssvip";
     }
 
