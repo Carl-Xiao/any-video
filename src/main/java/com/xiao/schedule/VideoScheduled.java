@@ -18,7 +18,10 @@ public class VideoScheduled {
     @Autowired
     BibilPipeline bibilPipeline;
 
-    @Scheduled(cron = "0 0/1 * * * ? ")
+    /**
+     * 每周一10点AM。8点PM
+     */
+    @Scheduled(cron = "0 0 10,20 ? * MON")
     public void runningMan() {
         //2018数据已经不合更新，没必要再采集
         //2019数据采集

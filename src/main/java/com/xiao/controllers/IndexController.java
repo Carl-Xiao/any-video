@@ -32,6 +32,7 @@ public class IndexController {
         videoBibiData.setType(0);
         List<VideoBibiData> lists = videoBibiDataService.findAll(videoBibiData, 0L, 4L);
         model.addAttribute("rmTvs", lists);
+
         return "index";
     }
 
