@@ -12,4 +12,5 @@ public class TencentData {
     private String href;
     private String episode;
     private String vid;
+    private String md5;
 }

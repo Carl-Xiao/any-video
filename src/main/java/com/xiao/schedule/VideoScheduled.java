@@ -40,7 +40,7 @@ public class VideoScheduled {
     /**
      * 电视剧
      */
-    @Scheduled(cron = "0 0/1 * * * ? ")
+    @Scheduled(cron = "0 0 10,20 ? * MON")
     public void tencentUsDrama() {
         log.info("开始采集腾讯电视剧");
         Spider spider = Spider.create(new TencentPageProcessor());

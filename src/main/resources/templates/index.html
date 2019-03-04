@@ -11,7 +11,7 @@
 
     <script th:inline="javascript"></script>
     <!-- Site Properties -->
-    <title>Carl-Xiao B站可分享视频 </title>
+    <title>Carl-Xiao 个人喜好视频 </title>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://cdn.bootcss.com/semantic-ui/2.4.0/semantic.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/semantic-ui/2.4.0/semantic.min.js"></script>
@@ -55,15 +55,12 @@
     <div class="ui four column doubling grid" id="main">
         <div class="column" th:each="rmTv,sizeStat:${rmTvs}">
             <div class="ui fluid card">
-                <a class="image" href="#">
+                <a class="image" th:href="@{'/bibil/'+${rmTv.page}}">
                     <img src="/static/img/rm.png"/>
                 </a>
                 <div class="content">
-                    <a class="header" th:href="@{'/view/'+${rmTv.page}}" th:text="${rmTv.part}"
+                    <a class="header part" th:href="@{'/bibil/'+${rmTv.page}}" th:text="${rmTv.part}"
                        th:target="_blank">李光洙</a>
-                    <div class="meta">
-                        <a>HAHA</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -71,26 +68,20 @@
     <div class="ui hidden divider"></div>
     <div class="row relative">
         <h3 class="ui dividing header red">
-            <i class="tv icon item"></i>最新动漫
+            <i class="tv icon item"></i>最新电视剧
         </h3>
         <button class="ui mini red button right-absolute refresh" value="12"><i class="refresh icon"></i>换一批</button>
     </div>
     <div class="ui six column doubling grid">
         <div th:class="${iterStat.index} < 12 ? 'column videoItem' : 'videoItem'"
-             th:each="movie, iterStat:${movies}">
+             th:each="movie, iterStat:${qqTvs}">
             <div class="ui fluid link card" th:if="${iterStat.index} < 12">
-                <a class="image videoUrl" th:href="@{/view(u=${movie.value})}">
-                    <img class="videoImage" th:src="${movie.image}" alt=""/>
+                <a class="image videoUrl" th:href="@{/qq/${movie.md5}}">
+                    <img class="videoImage" src="/static/img/deception.jpg" alt=""/>
                 </a>
                 <div class="extra content">
-                    <a class="ui teal videoTitle" th:text="${movie.title}">电影</a>
+                    <a class="ui teal videoTitle" th:text="${movie.name}">电视剧</a>
                 </div>
-            </div>
-
-            <div th:if="${iterStat.index} >= 12" hidden>
-                <ul class="videoImage">[[${movie.image}]]</ul>
-                <ul class="videoTitle">[[${movie.title}]]</ul>
-                <a class="videoUrl" th:href="@{/view(u=${movie.value})}"></a>
             </div>
         </div>
     </div>
