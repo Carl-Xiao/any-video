@@ -1,10 +1,22 @@
 .main.container {
     margin: 4em;
 }
+
 .main .tag {
     float: right;
     margin: 0 0 0 .5rem;
 }
+
 .main .ui.header:first-child {
     margin-top: .14285714em;
+}
+
+.spaced .bottom-space {
+    margin-bottom: 5px;
+    font-size: 0;
+    position: relative;
+    display: inline-block;
+    margin: 9px 2px 9px 0;
+    width: 15.4%;
+    font-size: 18px;
 }

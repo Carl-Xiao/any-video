@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -72,15 +72,15 @@ public class IndexService {
 
     public Model qqViewVideo(String md5, Model model) {
         List<TencentData> tencentDataList = tencentDao.getAllEpisodeByMd5(md5);
-        int dramSize = tencentDataList.size();
-        log.info("腾讯视频: " + dramSize);
         TencentData tencentData = tencentDataList.get(0);
         String title = tencentData.getName();
         String url = "xxxx";
-        List<String> episodes = new ArrayList<>();
-        tencentDataList.parallelStream().forEach(s -> {
+        LinkedList<String> episodes = new LinkedList<>();
+
+        for (TencentData s : tencentDataList) {
             episodes.add(s.getEpisode());
-        });
+        }
+
         model.addAttribute("title", title);
         model.addAttribute("url", url);
         model.addAttribute("episodes", episodes);

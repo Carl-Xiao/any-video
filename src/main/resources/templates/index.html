@@ -73,14 +73,13 @@
         <button class="ui mini red button right-absolute refresh" value="12"><i class="refresh icon"></i>换一批</button>
     </div>
     <div class="ui six column doubling grid">
-        <div th:class="${iterStat.index} < 12 ? 'column videoItem' : 'videoItem'"
-             th:each="movie, iterStat:${qqTvs}">
-            <div class="ui fluid link card" th:if="${iterStat.index} < 12">
-                <a class="image videoUrl" th:href="@{/qq/${movie.md5}}">
-                    <img class="videoImage" src="/static/img/deception.jpg" alt=""/>
+        <div class="column videoItem" th:each="movie, iterStat:${qqTvs}">
+            <div class="ui fluid link card">
+                <a class="image videoUrl" th:href="@{'/qq/'+${movie.md5}}" th:target="_blank">
+                    <img class="videoImage" src="/static/img/deception.jpg" th:alt="${movie.name}"/>
                 </a>
                 <div class="extra content">
-                    <a class="ui teal videoTitle" th:text="${movie.name}">电视剧</a>
+                    <a class="ui teal videoTitle" th:href="@{'/qq/'+${movie.md5}}" th:target="_blank" th:text="${movie.name}">电视剧</a>
                 </div>
             </div>
         </div>

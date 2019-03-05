@@ -28,7 +28,6 @@ public class VideoScheduled {
      */
     @Scheduled(cron = "0 0 10,20 ? * MON")
     public void runningMan() {
-        //2018数据已经不合更新，没必要再采集
         //2019数据采集
         log.info("开始采集RunningMan2019合集");
         Spider spider = Spider.create(new BibilPageProcessor());
@@ -40,11 +39,11 @@ public class VideoScheduled {
     /**
      * 电视剧
      */
-    @Scheduled(cron = "0 0 10,20 ? * MON")
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void tencentUsDrama() {
-        log.info("开始采集腾讯电视剧");
         Spider spider = Spider.create(new TencentPageProcessor());
-        spider.addUrl("https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html");
+        //https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html
+        spider.addUrl("https://v.qq.com/x/cover/ha7r9z89i9d234y/a0029vjyzhl.html");
         spider.addPipeline(tencentPipeline);
         spider.setExitWhenComplete(true);
         spider.start();

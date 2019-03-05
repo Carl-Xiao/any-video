@@ -14,14 +14,19 @@ import java.util.List;
 @Component
 @Mapper
 public interface TencentDao {
-    @Insert("insert into video_tencent_data(vid,href,name,episode) values(#{vid},#{href},#{name},#{episode}) ")
+    @Insert("insert into video_tencent_data(md5,vid,href,name,episode) values(#{md5},#{vid},#{href},#{name},#{episode}) ")
     Integer inserIntoTencent(TencentData tencentData);
 
-    @Select("select * from video_tencent_data where #{md5}=#{0} order by episode asc ")
+    @Select("select * from video_tencent_data where md5=#{0} order by episode asc ")
     List<TencentData> getAllEpisodeByMd5(String name);
+
+    @Select("select episode from video_tencent_data where md5=#{0} order by episode asc ")
+    List<Integer> getAllEpisode(String name);
 
     @Select(" SELECT md5,`name` FROM video_tencent_data GROUP BY md5 limit 4 ")
     List<TencentData> getRecommendLimitFour();
 
+    @Select("select episode from video_tencent_data where md5=#{0} order by episode desc limit 1")
+    Integer getHighestEpisodeByMd5(String name);
 
 }

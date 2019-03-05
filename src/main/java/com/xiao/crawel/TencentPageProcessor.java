@@ -8,15 +8,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
-import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 public class TencentPageProcessor implements PageProcessor {
@@ -32,9 +28,12 @@ public class TencentPageProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-        log.info("获取数据");
-        Html html = page.getHtml();
+        String url = page.getUrl().get();
+        int md5length = url.indexOf("cover/");
+        int md5lastlength = url.lastIndexOf("/");
+        String md5 = url.substring(md5length + 6, md5lastlength);
 
+        Html html = page.getHtml();
         String title = html.xpath("//title/text()").toString();
         int length = title.indexOf("第");
         title = title.substring(0, length - 1);
@@ -55,24 +54,33 @@ public class TencentPageProcessor implements PageProcessor {
         for (Element e : elements1) {
             TencentData tencentData = new TencentData();
             String href = e.html();
+            if (href.contains("预告")) {
+                continue;
+            }
             href = href.substring(href.lastIndexOf("href") + 6, href.lastIndexOf("_stat") - 2);
-            String vid = href.substring(href.lastIndexOf("/")+1, href.lastIndexOf(".html"));
+            String vid = href.substring(href.lastIndexOf("/") + 1, href.lastIndexOf(".html"));
             String text = e.text();
             tencentData.setVid(vid);
             tencentData.setHref(href);
             tencentData.setEpisode(text);
             tencentData.setName(title);
+            tencentData.setMd5(md5);
             tencentDataList.add(tencentData);
         }
+        page.putField("title",title);
+        page.putField("md5",md5);
         page.putField(CrawKey.tencentUsDrama, tencentDataList);
     }
+
     @Override
     public Site getSite() {
         return site;
     }
 
     public static void main(String[] args) {
-        Spider.create(new TencentPageProcessor()).addUrl("https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html").run();
+        String url = "https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html";
+
+//        Spider.create(new TencentPageProcessor()).addUrl("https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html").run();
     }
 
 }

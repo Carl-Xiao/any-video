@@ -10,7 +10,7 @@
 
     <script th:inline="javascript"></script>
     <!-- Site Properties -->
-    <title>Carl-Xiao RM视频</title>
+    <title>Carl-Xiao 腾讯视频</title>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://cdn.bootcss.com/semantic-ui/2.4.0/semantic.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/semantic-ui/2.4.0/semantic.min.js"></script>
@@ -40,7 +40,7 @@
                     </h3>
                     <div class="ui active centered inline loader" id="listLoader"></div>
 
-                    <div class="ui center aligned segment spaced" id="playList">
+                    <div class="ui aligned segment spaced" id="playList">
 
                     </div>
                     <h3 class="ui dividing header red">
@@ -60,26 +60,19 @@
     </div>
 </div>
 <script th:inline="javascript">
-    var episode = [[${episode}]];
-
+    var episodes = [[${episodes}]];
     /** 获取当前电视剧的分集信息 **/
     $(document).ready(function () {
-        // var regx = /u=(.*)/;
-        // var src = regx.exec(window.location.href)[1];
-        // var api = "/api/episode";
-        // $.get(api, {
-        //     "v": src
-        // }, function (data) {
-        //     $("#listLoader").attr("class", "");
-        //     if (data.length > 0) {
-        //         for (var i = 0; i < data.length; i++) {
-        //             var episode = $("<button class='ui mini basic red button bottom-space play-episode'></button>")
-        //             episode.text(data[i].index);
-        //             episode.attr("value", data[i].value);
-        //             $("#playList").append(episode);
-        //         }
-        //     }
-        // });
+        if (episodes.length > 0) {
+            //取消loader
+            $("#listLoader").attr("class", "");
+            for (var i = 0; i < episodes.length; i++) {
+                var episode = $("<button class='ui mini basic red button bottom-space play-episode'></button>")
+                episode.text(episodes[i]);
+                episode.attr("value", episodes[i]);
+                $("#playList").append(episode);
+            }
+        }
     });
     $(".play-episode").click(function () {
         var self = $(this);

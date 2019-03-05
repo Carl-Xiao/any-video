@@ -21,8 +21,21 @@ public class TencentPipeline implements Pipeline {
 
     @Override
     public void process(ResultItems resultItems, Task task) {
-        log.info("插入电视剧");
+        log.info("title:" + resultItems.get("title"));
+        String md5 = resultItems.get("md5");
+        Integer episode = tencentDao.getHighestEpisodeByMd5(md5);
+        if (episode == null) {
+            episode = 0;
+        }
+        log.info("highest episode:" + episode);
         List<TencentData> tencentDataList = resultItems.get(CrawKey.tencentUsDrama);
-        tencentDataList.parallelStream().forEach(s -> tencentDao.inserIntoTencent(s));
+        Integer finalEpisode = episode;
+        tencentDataList.parallelStream().forEach(s -> {
+                    String collecEpisode = s.getEpisode();
+                    if (Integer.parseInt(collecEpisode) > finalEpisode) {
+                        tencentDao.inserIntoTencent(s);
+                    }
+                }
+        );
     }
 }
