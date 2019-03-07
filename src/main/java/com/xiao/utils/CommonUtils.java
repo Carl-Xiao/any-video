@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * @author Carl-Xiao 2018-12-15
- *
  */
 public class CommonUtils {
     public static List<Integer> parseList(Integer max) {
@@ -14,6 +13,10 @@ public class CommonUtils {
             lists.add(i);
         }
         return lists;
+    }
+
+    public static boolean isEmpty(String result) {
+        return result == null || "".equals(result);
     }
 
 }

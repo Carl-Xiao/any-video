@@ -4,6 +4,7 @@ import com.xiao.bean.TencentData;
 import com.xiao.bean.VideoBibiData;
 import com.xiao.dao.TencentDao;
 import com.xiao.utils.CommonUtils;
+import com.xiao.utils.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class IndexService {
 
     @Autowired
     TencentDao tencentDao;
+
+    @Autowired
+    OkHttpUtils okHttpUtils;
 
     public List<VideoBibiData> bibilShareRecommend() {
         VideoBibiData videoBibiData = new VideoBibiData();
@@ -77,14 +81,14 @@ public class IndexService {
         String url = "xxxx";
         LinkedList<String> episodes = new LinkedList<>();
 
-        for (TencentData s : tencentDataList) {
-            episodes.add(s.getEpisode());
-        }
-
         model.addAttribute("title", title);
         model.addAttribute("url", url);
-        model.addAttribute("episodes", episodes);
+        model.addAttribute("episodes", tencentDataList);
         return model;
     }
+
+
+
+
 
 }
