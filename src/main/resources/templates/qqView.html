@@ -31,19 +31,23 @@
     <div class="ui segment">
         <div class="ui two column very relaxed grid">
             <div class="column">
+                <div class="row relative">
+                    <h3 class="ui dividing header red" id="videoTitle">
+                        <i class="video play outline icon"></i>
+                        [[${title}]]
+                    </h3>
+                </div>
                 <div class="ui left floated main menu">
-
-                    <div height='360' width='480'>~~~假装有视频~~</div>
-                    <!--<video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%" controls-->
-                           <!--autoplay>-->
-                        <!--<source th:src="${source.playUrl}"/>-->
-                    <!--</video>-->
-                    <!--<div class="ui teal progress" id="vProgress">-->
-                        <!--<div class="bar">-->
-                            <!--<div class="progress"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
+                    <!--<div height='360' width='480'>~~~假装有视频~~</div>-->
+                    <video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%" controls
+                           autoplay>
+                        <source th:src="${source.playUrl}"/>
+                    </video>
+                    <div class="ui teal progress" id="vProgress">
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="column">
@@ -75,41 +79,52 @@
 </div>
 <script th:inline="javascript">
     var episodes = [[${episodes}]];
+    var video = document.getElementById('mediaplayer');
     /** 初始化电视剧的分集信息 **/
     $(document).ready(function () {
         if (episodes.length > 0) {
             //取消loader
             $("#listLoader").attr("class", "");
-            //初始化多少集
+            console.log("初始化视频分级信息以及基本信息")
             for (var i = 0; i < episodes.length; i++) {
                 var episode = $("<button class='ui mini basic red button bottom-space play-episode'></button>")
                 episode.text(episodes[i].episode);
                 episode.attr("value", episodes[i].vid);
                 $("#playList").append(episode);
             }
-
-
-
+            $(".play-episode").click(function () {
+                var self = $(this);
+                self.attr("class", "bottom-space ui basic red loading button");
+                var vid = $(this).val();
+                var url = "/api/qq/" + vid;
+                console.log("url:" + url)
+                $.get(url, function (data) {
+                    $("#videoTitle").html("<i class='video play outline icon'></i>" + data.title);
+                    $("#mediaplayer").attr("src", data.playUrl);
+                    // $("#videoUrl").attr("data-value", data.value);
+                    // $("#videoImage").attr("src", data.image);
+                    self.attr("class", "bottom-space ui basic red button");
+                    init(vid);
+                })
+            });
         }
     });
-    function init(url) {
+    var partList, currentPart;
+    var partSize = 10;
+
+    function init(vid) {
+        console.log("vid:" + vid)
         partList = new Array();
-        partList[0] = url;
+        partList[0] = vid;
         currentPart = 0;
-        url = url.replace(/\?.*/, '');
-        var index = url.lastIndexOf('/');
-        baseUrl = url.substring(0, index);
-        baseFile = url.substring(index + 1, url.length);
         var percent = 1 / parseInt(partSize) * 100;
-
         progress(percent);
-
         for (var i = 0; i < parseInt(partSize - 1); i++) {
             var fileIndex = i + 2;
-            var api = '/api/qq/' + baseFile + '/' + fileIndex;
-            console.log("request:" + api);
+            var api = '/api/qq/' + vid + '/' + fileIndex;
+            console.log("request片段:" + api);
             $.get(api, function (data) {
-                var result = baseUrl + data.value;
+                var result = data.url;
                 var partIndex = parseInt(data.index);
                 console.log("data.index:", data.index);
                 console.log('response: ' + result);
@@ -118,30 +133,35 @@
             });
         }
     }
+
     function progress(percent) {
         $('#vProgress').progress({
             percent: percent
         });
     }
 
-    $(".play-episode").click(function () {
-        var self = $(this);
-        self.attr("class", "bottom-space ui basic red loading button");
-        var vid = $(this).val();
-        vid = "/api/qq/" + vid;
-        console.log("vid:" + vid)
-
-        // $.get(playUrl, function (data) {
-        //     $("#videoTitle").html("<i class='video play outline icon'></i>" + data.title);
-        //     $("#mediaplayer").attr("src", data.playUrl);
-        //     $("#videoUrl").attr("data-value", data.value);
-        //     $("#videoImage").attr("src", data.image);
-        //     self.attr("class", "bottom-space ui basic red button");
-        //     if (videoType === 'qq') {
-        //         init(data.playUrl);
-        //     }
-        // })
+    //处理视频地址
+    $(document).ready(function () {
+        console.log("初始化视频地址信息")
+        var current = video.currentSrc
+        console.log(current + "当前基本信息")
+        init(current);
+        /**
+         * 自动播放下一个片段
+         */
+        video.addEventListener('ended', function () {
+            currentPart++;
+            if (currentPart < partList.length) {
+                console.log("currentPart: " + currentPart);
+                video.src = partList[currentPart];
+                video.load();
+                video.play();
+                var percent = (currentPart + 1) / parseInt(partSize) * 100;
+                progress(percent);
+            }
+        });
     });
+
 </script>
 </body>
 </html>

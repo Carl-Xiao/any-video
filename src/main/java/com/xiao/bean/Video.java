@@ -7,6 +7,8 @@ import lombok.Data;
  */
 @Data
 public class Video {
+    //视频唯一标识
+    private String vid;
     // 视频名称
     private String title;
 
@@ -22,5 +24,11 @@ public class Video {
     private String value;
 
     // 其他信息
-    private String other;
+    private String part;
+
+    // fn标识
+    private String fn;
+    // format
+    private String format;
+
 }

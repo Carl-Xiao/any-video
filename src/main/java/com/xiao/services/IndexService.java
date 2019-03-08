@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,6 +23,9 @@ public class IndexService {
 
     @Autowired
     TencentDao tencentDao;
+
+    @Autowired
+    ApiService apiService;
 
     @Autowired
     OkHttpUtils okHttpUtils;
@@ -60,7 +62,6 @@ public class IndexService {
         return nums;
     }
 
-
     public Model viewVideo(String md5, Model model) {
         VideoBibiData videoBibiData = videoBibiDataService.getInfoByPage(Integer.parseInt(md5));
         Long aid = videoBibiData.getAid();
@@ -78,17 +79,14 @@ public class IndexService {
         List<TencentData> tencentDataList = tencentDao.getAllEpisodeByMd5(md5);
         TencentData tencentData = tencentDataList.get(0);
         String title = tencentData.getName();
-        String url = "xxxx";
-        LinkedList<String> episodes = new LinkedList<>();
-
+        String vid = tencentDataList.get(0).getVid();
+        log.info("vid:"+vid);
+        String url = apiService.getInfo(vid).getPlayUrl();
+        log.info("播放地址"+url);
         model.addAttribute("title", title);
         model.addAttribute("url", url);
         model.addAttribute("episodes", tencentDataList);
         return model;
     }
-
-
-
-
 
 }
