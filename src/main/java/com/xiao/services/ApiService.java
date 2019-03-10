@@ -43,7 +43,7 @@ public class ApiService {
         video.setVid(vid);
         Map<String, String> vidInfo = new HashMap<>();
         vidInfo.put("vid", vid);
-//        vidInfo.put("platform", "10901");
+        vidInfo.put("platform", "10901");
         vidInfo.put("sdtfrom", "v1010");
         vidInfo.put("format", "10209");
         vidInfo.put("otype", "json");

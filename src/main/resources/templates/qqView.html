@@ -41,7 +41,7 @@
                     <!--<div height='360' width='480'>~~~假装有视频~~</div>-->
                     <video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%" controls
                            autoplay>
-                        <source th:src="${source.playUrl}"/>
+                        <source th:src="${url}"/>
                     </video>
                     <div class="ui teal progress" id="vProgress">
                         <div class="bar">
@@ -142,10 +142,15 @@
 
     //处理视频地址
     $(document).ready(function () {
-        console.log("初始化视频地址信息")
         var current = video.currentSrc
-        console.log(current + "当前基本信息")
-        init(current);
+        var last = current.lastIndexOf("/")
+        var last2 = current.lastIndexOf("?")
+        if (last > 0 && last2 > 0) {
+            var urls = url.substring(length + 1, length2);
+            var vid = urls.split("\\.")[0];
+            console.log("vid" + vid)
+            init(vid);
+        }
         /**
          * 自动播放下一个片段
          */

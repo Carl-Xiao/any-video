@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * @author Carl-Xiao 2018-12-19
- *
  */
 @RestController
 @RequestMapping(value = "admin")
@@ -34,5 +33,10 @@ public class AdminController {
         return lists;
     }
 
+    public static void main(String[] args) {
+        String a = "2fbb7a84655d1005311fe7d8ed2aecdc";
+        log.info(a.toUpperCase());
 
+
+    }
 }
