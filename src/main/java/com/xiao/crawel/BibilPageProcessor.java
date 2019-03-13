@@ -10,10 +10,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
-import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +81,7 @@ public class BibilPageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new BibilPageProcessor()).addUrl("https://www.bilibili.com/video/av18089528/?p=1").run();
+//        Spider.create(new BibilPageProcessor()).addUrl("https://www.bilibili.com/video/av18089528/?p=1").run();
 //        Spider.create(new GithubRepoPageProcessor()).test("https://github.com/code4craft") "https://github.com/sssvip";
     }
 
