@@ -1,6 +1,8 @@
 package com.xiao.services;
 
 import com.xiao.bean.VideoBibiData;
+import com.xiao.bean.VideoRecommend;
+import com.xiao.dao.ApiSohuDao;
 import com.xiao.utils.CommonUtils;
 import com.xiao.utils.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,9 @@ public class IndexService {
 
     @Autowired
     ApiService apiService;
+
+    @Autowired
+    ApiSohuDao apiSohuDao;
 
     @Autowired
     OkHttpUtils okHttpUtils;
@@ -70,13 +75,8 @@ public class IndexService {
         return model;
     }
 
-    public Object sohuRecommend() {
+    public List<VideoRecommend> sohuRecommend() {
+        return apiSohuDao.recommendVideoDrama();
 
-
-
-
-
-
-        return null;
     }
 }

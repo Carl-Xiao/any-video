@@ -39,10 +39,4 @@ public class IndexController {
         return "view";
     }
 
-    @RequestMapping(value = "qq/{md5}", method = RequestMethod.GET)
-    public String qqViewVideo(@PathVariable("md5") String md5,Model model) {
-        indexService.qqViewVideo(md5, model);
-        return "qqView";
-    }
-
 }

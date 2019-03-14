@@ -68,7 +68,7 @@ public class ApiService {
 
     public Episode getInfo(String vid) {
         Episode episode = apiSohuDao.getEpisodeByVid(vid);
-        if(episode!=null){
+        if (episode != null) {
             return episode;
         }
         String uid = "";
@@ -138,8 +138,9 @@ public class ApiService {
         return episode;
     }
 
-    public Episode getVidRealUrlPart(String vid, String index) {
-        //视频基本信息从数据库获取
-        return null;
+    public int epsiodes(String playList) {
+
+        return apiSohuDao.dramaPlayEpsiodes(playList);
+
     }
 }

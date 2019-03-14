@@ -29,9 +29,9 @@
 
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="/static/img/ups1.jpg" class="img"></div>
-        <div class="swiper-slide"><img src="/static/img/ups2.jpg" class="img"></div>
-        <div class="swiper-slide"><img src="/static/img/ups3.jpg" class="img"></div>
+        <div class="swiper-slide"><img src="http://i0.itc.cn/20190304/39e5_3daeb86a_87f2_6e79_6613_af574145d3a1_1.png" class="img"></div>
+        <div class="swiper-slide"><img src="http://photocdn.tv.sohu.com/img/20190114/pic_org_ac3518de-d220-4f0b-ac35-cc76aac9826f.jpg" class="img"></div>
+        <!--<div class="swiper-slide"><img src="/static/img/ups3.jpg" class="img"></div>-->
     </div>
     <!-- 如果需要分页器 -->
     <div class="swiper-pagination"></div>
@@ -73,13 +73,13 @@
         <button class="ui mini red button right-absolute refresh" value="12"><i class="refresh icon"></i>换一批</button>
     </div>
     <div class="ui six column doubling grid">
-        <div class="column videoItem" th:each="movie, iterStat:${qqTvs}">
+        <div class="column videoItem" th:each="movie, iterStat:${sohuTvs}">
             <div class="ui fluid link card">
-                <a class="image videoUrl" th:href="@{'/qq/'+${movie.md5}}" th:target="_blank">
-                    <img class="videoImage" src="/static/img/deception.jpg" th:alt="${movie.name}"/>
+                <a class="image videoUrl" th:href="@{'/api/sohu/'+${movie.play}+'/'+${movie.vid}}" th:target="_blank">
+                    <img class="videoImage" th:src="${movie.img_url}" th:alt="${movie.name}"/>
                 </a>
                 <div class="extra content">
-                    <a class="ui teal videoTitle" th:href="@{'/qq/'+${movie.md5}}" th:target="_blank" th:text="${movie.name}">电视剧</a>
+                    <a class="ui teal videoTitle" th:href="@{'/api/sohu/'+${movie.play}+'/'+${movie.vid}}" th:target="_blank" th:text="${movie.name}"></a>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
 </body>
 <script>
     var mySwiper = new Swiper('.swiper-container', {
-        speed: 8000,
+        speed: 3000,
         longSwipes: false,
         loop: true,
         autoplay: {

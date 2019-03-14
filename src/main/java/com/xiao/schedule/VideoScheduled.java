@@ -3,7 +3,6 @@ package com.xiao.schedule;
 import com.xiao.crawel.BibilPageProcessor;
 import com.xiao.crawel.BibilPipeline;
 import com.xiao.crawel.SohuPipeline;
-import com.xiao.crawel.SohuProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -39,14 +38,14 @@ public class VideoScheduled {
     /**
      * 搜狐视频
      */
-    @Scheduled(cron = "0 */1 * * * ? ")
-    public void souhuVideo() {
-        String url = "https://tv.sohu.com/v/MjAxNzExMDkvbjYwMDI0NzEwMi5zaHRtbA==.html";
-        Spider spider = Spider.create(new SohuProcessor());
-        spider.addUrl(url);
-        spider.addPipeline(sohuPipeline);
-        spider.setExitWhenComplete(true);
-        spider.start();
-    }
+//    @Scheduled(cron = "0 */1 * * * ? ")
+//    public void souhuVideo() {
+//        String url = "https://tv.sohu.com/v/MjAxNzExMDkvbjYwMDI0NzEwMi5zaHRtbA==.html";
+//        Spider spider = Spider.create(new SohuProcessor());
+//        spider.addUrl(url);
+//        spider.addPipeline(sohuPipeline);
+//        spider.setExitWhenComplete(true);
+//        spider.start();
+//    }
 
 }
