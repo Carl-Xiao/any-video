@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Carl-Xiao 2019-03-14
+ */
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
-public class TencentData {
-    private String name;
-    private String href;
-    private String episode;
+public class SohuEpisode {
     private String vid;
-    private String md5;
+    private String playlistid;
+    private String o_playlistId;
 }

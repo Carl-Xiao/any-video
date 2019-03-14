@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,28 +21,6 @@ public class OkHttpUtils {
     public OkHttpUtils() {
         OKHttpProperty property = new OKHttpProperty();
         client = (new OkHttpClient()).newBuilder().readTimeout((long) property.getReadTimeOut(), TimeUnit.SECONDS).writeTimeout((long) property.getWriteTimeout(), TimeUnit.SECONDS).connectTimeout((long) property.getConnectTimeout(), TimeUnit.SECONDS).retryOnConnectionFailure(property.isRetryOnConnectionFailure()).connectionPool(new ConnectionPool(property.getMaxIdleConnections(), (long) property.getKeepAliveDuration(), TimeUnit.MINUTES)).build();
-    }
-
-    public static void main(String[] args) {
-        OkHttpUtils okHttpUtils = new OkHttpUtils();
-
-        Request request = new Request.Builder().header("Cookie", "token=cd123456")
-                .url("http://yungaoku.weichuangbang.cn/xdnphb/yungao/platform/getAcquire")
-                .get()
-                .build();
-        Call call = okHttpUtils.client.newCall(request);
-        try {
-            Response response = call.execute();
-            int code = response.code();
-            String content = response.body().string();
-
-            log.info("code:" + code);
-            log.info("contnet:" + content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
 
@@ -138,12 +117,27 @@ public class OkHttpUtils {
             }
             requestBody = builder.build();
         }
-        Request request = new Request.Builder().header("Cookie",cookie)
+        Request request = new Request.Builder().header("Cookie", cookie)
                 .url(url)
                 .post(requestBody)
                 .build();
 
         return doSyncCall(request);
     }
+
+
+    public Response doGetAddHeader(String url, Map<String, String> headerMap) throws IOException {
+        Request.Builder builder = new Request.Builder();
+        if (headerMap != null && headerMap.size() > 0) {
+            for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                builder.addHeader(key,value);
+            }
+        }
+        Request request = builder.url(url).get().build();
+        return doSyncCall(request);
+    }
+
 
 }

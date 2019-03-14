@@ -1,8 +1,6 @@
 package com.xiao.services;
 
-import com.xiao.bean.TencentData;
 import com.xiao.bean.VideoBibiData;
-import com.xiao.dao.TencentDao;
 import com.xiao.utils.CommonUtils;
 import com.xiao.utils.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +20,6 @@ public class IndexService {
     VideoBibiDataService videoBibiDataService;
 
     @Autowired
-    TencentDao tencentDao;
-
-    @Autowired
     ApiService apiService;
 
     @Autowired
@@ -34,11 +29,6 @@ public class IndexService {
         VideoBibiData videoBibiData = new VideoBibiData();
         videoBibiData.setType(0);
         List<VideoBibiData> lists = videoBibiDataService.findAll(videoBibiData, 0L, 4L);
-        return lists;
-    }
-
-    public List<TencentData> qqRecommend() {
-        List<TencentData> lists = tencentDao.getRecommendLimitFour();
         return lists;
     }
 
@@ -76,17 +66,17 @@ public class IndexService {
     }
 
     public Model qqViewVideo(String md5, Model model) {
-        List<TencentData> tencentDataList = tencentDao.getAllEpisodeByMd5(md5);
-        TencentData tencentData = tencentDataList.get(0);
-        String title = tencentData.getName();
-        String vid = tencentDataList.get(0).getVid();
-        log.info("vid:"+vid);
-        String url = apiService.getInfo(vid).getPlayUrl();
-        log.info("播放地址"+url);
-        model.addAttribute("title", title);
-        model.addAttribute("url", url);
-        model.addAttribute("episodes", tencentDataList);
+
         return model;
     }
 
+    public Object sohuRecommend() {
+
+
+
+
+
+
+        return null;
+    }
 }

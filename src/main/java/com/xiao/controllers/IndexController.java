@@ -21,7 +21,7 @@ public class IndexController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("rmTvs", indexService.bibilShareRecommend());
-        model.addAttribute("qqTvs", indexService.qqRecommend());
+        model.addAttribute("sohuTvs", indexService.sohuRecommend());
         return "index";
     }
 

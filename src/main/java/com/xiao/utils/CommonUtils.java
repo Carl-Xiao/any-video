@@ -19,4 +19,13 @@ public class CommonUtils {
         return result == null || "".equals(result);
     }
 
+    public static String timeSixtyBit() {
+        return (System.currentTimeMillis() * 1000 + Math.round(Math.random() * 1000)) + "";
+    }
+
+    public static String timeUtcTime() {
+        return System.currentTimeMillis() + "";
+    }
+
+
 }

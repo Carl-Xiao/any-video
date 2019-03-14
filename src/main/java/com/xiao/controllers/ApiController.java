@@ -1,7 +1,6 @@
 package com.xiao.controllers;
 
 import com.xiao.bean.Episode;
-import com.xiao.bean.Video;
 import com.xiao.services.ApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,13 @@ public class ApiController {
     @Autowired
     ApiService apiService;
 
-    @RequestMapping(value = "/api/qq/{vid}",method = {RequestMethod.GET,RequestMethod.POST})
-    public Video getVidRealUrlIndex(@PathVariable("vid") String vid) {
+    @RequestMapping(value = "/api/sohu/{vid}",method = {RequestMethod.GET,RequestMethod.POST})
+    public Episode getVidRealUrlIndex(@PathVariable("vid") String vid) {
         return apiService.getInfo(vid);
     }
 
-    @RequestMapping(value = "/api/qq/{vid}/{part}",method = {RequestMethod.GET,RequestMethod.POST})
-    public Episode getVidRealUrlPart(@PathVariable("vid") String vid, @PathVariable("part") String part) {
-        return apiService.getVidRealUrlPart(vid,part);
-    }
+
+
+
 
 }

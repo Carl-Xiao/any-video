@@ -2,8 +2,8 @@ package com.xiao.schedule;
 
 import com.xiao.crawel.BibilPageProcessor;
 import com.xiao.crawel.BibilPipeline;
-import com.xiao.crawel.TencentPageProcessor;
-import com.xiao.crawel.TencentPipeline;
+import com.xiao.crawel.SohuPipeline;
+import com.xiao.crawel.SohuProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,9 +19,9 @@ import us.codecraft.webmagic.Spider;
 public class VideoScheduled {
     @Autowired
     BibilPipeline bibilPipeline;
-    @Autowired
-    TencentPipeline tencentPipeline;
 
+    @Autowired
+    SohuPipeline sohuPipeline;
 
     /**
      * 每周一10点AM。8点PM
@@ -37,14 +37,14 @@ public class VideoScheduled {
         spider.start();
     }
     /**
-     * 电视剧
+     * 搜狐视频
      */
-//    @Scheduled(cron = "0 */1 * * * ?")
-    public void tencentUsDrama() {
-        Spider spider = Spider.create(new TencentPageProcessor());
-        //https://v.qq.com/x/cover/pgd7q0o4xlhe3r8/b0029shkvvr.html
-        spider.addUrl("https://v.qq.com/x/cover/ha7r9z89i9d234y/a0029vjyzhl.html");
-        spider.addPipeline(tencentPipeline);
+    @Scheduled(cron = "0 */1 * * * ? ")
+    public void souhuVideo() {
+        String url = "https://tv.sohu.com/v/MjAxNzExMDkvbjYwMDI0NzEwMi5zaHRtbA==.html";
+        Spider spider = Spider.create(new SohuProcessor());
+        spider.addUrl(url);
+        spider.addPipeline(sohuPipeline);
         spider.setExitWhenComplete(true);
         spider.start();
     }
