@@ -18,11 +18,12 @@ public interface ApiSohuDao {
     @Insert("insert into video_episode_info(vid,source_url,play_url,episode_text) values(#{vid},#{sourceUrl},#{playUrl},#{episodeText} )")
     int insertIntoEpisode(Episode episode);
 
-    @Select(" select * from video_episode_info where vid = #{0} ")
+    @Select(" select a.vid,a.source_url,a.play_url,b.`name` from video_episode_info a , video_drama_info b WHERE a.vid=b.vid AND a.vid = #{0} ")
     @Results({
             @Result(property = "vid", column = "vid"),
             @Result(property = "sourceUrl", column = "source_url"),
             @Result(property = "playUrl", column = "play_url"),
+            @Result(property = "name", column = "name"),
     })
     Episode getEpisodeByVid(String vid);
 
@@ -34,7 +35,7 @@ public interface ApiSohuDao {
     @Select("select * from  video_drama_recommend limit 4 ")
     List<VideoRecommend> recommendVideoDrama();
 
-    @Select("select count(1) from video_drama_recommend where playlist_id=#{0}")
-    int dramaPlayEpsiodes(String playListId);
+    @Select(" SELECT vid,`name`,sort FROM video_drama_info ORDER BY sort ASC ")
+    List<VideoDrama> dramaPlayEpsiodes(String playListId);
 
 }

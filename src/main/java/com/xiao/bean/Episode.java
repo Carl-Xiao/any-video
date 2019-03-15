@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Episode {
     private String playlist_id;
-    public String vid;
-    public String sourceUrl;
-    public String playUrl;
-    public String episodeText;
+    private String vid;
+    private String sourceUrl;
+    private String playUrl;
+    private String episodeText;
+    private String name;
+
 }

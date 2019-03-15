@@ -1,11 +1,14 @@
 package com.xiao.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Carl-Xiao 2018-12-15
  */
+@Slf4j
 public class CommonUtils {
     public static List<Integer> parseList(Integer max) {
         List<Integer> lists = new ArrayList<>(max);
@@ -26,6 +29,11 @@ public class CommonUtils {
     public static String timeUtcTime() {
         return System.currentTimeMillis() + "";
     }
+
+    public static void main(String[] args) {
+         log.info(""+parseList(8));
+    }
+
 
 
 }

@@ -15,5 +15,5 @@ public class VideoDrama {
     private String vid;
     private String name;
     private String showName;
-    private String desc;
+    private String sort;
 }
