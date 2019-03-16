@@ -28,111 +28,64 @@
         <i class="cube icon item"></i>
         <span th:text="${source.name}"></span>
     </h2>
-    <input type="text" th:value="${play}">
+    <input type="hidden" th:value="${play}">
 
-    <!--<div class="ui segment">-->
-    <!--<div class="ui two column very relaxed grid">-->
-    <!--<div class="column">-->
-    <!--<div class="row relative">-->
-    <!--<h3 class="ui dividing header red" id="videoTitle">-->
-    <!--<i class="video play outline icon"></i>-->
-    <!--[[${source.name}]]-->
-    <!--</h3>-->
-    <!--</div>-->
-    <!--<div class="ui left floated main menu">-->
-    <!--&lt;!&ndash;<div height='360' width='480'>~~~假装有视频~~</div>&ndash;&gt;-->
-    <!--<div class="player margin-top">-->
-    <!--<video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%"-->
-    <!--controls-->
-    <!--autoplay>-->
-    <!--<source th:src="${url}"/>-->
-    <!--</video>-->
-    <!--</div>-->
-    <!--<div class="ui teal progress" id="vProgress">-->
-    <!--<div class="bar">-->
-    <!--<div class="progress"></div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="column">-->
-    <!--<div class="four wide column ">-->
-    <!--<h3 class="ui dividing header red">-->
-    <!--<i class="cube icon"></i>-->
-    <!--选集播放-->
-    <!--</h3>-->
-    <!--<div class="ui active centered inline loader" id="listLoader"></div>-->
-
-    <!--<div class="ui aligned segment spaced" id="playList">-->
-
-    <!--</div>-->
-    <!--<h3 class="ui dividing header red">-->
-    <!--<i class="asterisk icon"></i>-->
-    <!--特别提醒-->
-    <!--</h3>-->
-
-    <!--<div class="ui segment">-->
-    <!--<a class="ui red right ribbon label">仅支持HTML5</a>-->
-    <!--<p>无法播放请使用：</p>-->
-    <!--<p>Edge(Win) | Safari(Mac) | 手机浏览器</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="ui vertical divider"></div>-->
-    <!--</div>-->
-    <div class="ui stackable grid">
-        <div class="twelve wide column">
-            <div class="row relative">
-                <h3 class="ui dividing header red" id="videoTitle">
-                    <i class="video play outline icon"></i>
-                    [[${source.name}]]
-                </h3>
+    <div class="ui segment">
+        <div class="ui two column very relaxed grid">
+            <div class="column">
+                <div class="row relative">
+                    <h3 class="ui dividing header red" id="videoTitle">
+                        <i class="video play outline icon"></i>
+                        [[${source.name}]]
+                    </h3>
+                </div>
+                <!--<div class="ui left floated main menu">  </div>-->
+                <div class="player margin-top">
+                    <video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%"
+                           controls
+                           autoplay>
+                        <source th:src="${url}"/>
+                    </video>
+                </div>
+                <div class="ui teal progress" id="vProgress">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
             </div>
+            <div class="column">
+                <div class="four wide column ">
+                    <h3 class="ui dividing header red">
+                        <i class="cube icon"></i>
+                        选集播放
+                    </h3>
+                    <div class="ui active centered inline loader" id="listLoader"></div>
 
-            <div class="player margin-top">
-                <video id="mediaplayer" width="100%" height="100%" preload="none" style="max-width: 100%" controls
-                       autoplay>
-                    <source th:src="${url}"/>
-                </video>
-            </div>
+                    <div class="ui aligned segment spaced" id="playList">
 
-            <div class="ui teal progress" id="vProgress">
-                <div class="bar">
-                    <div class="progress"></div>
+                    </div>
+                    <h3 class="ui dividing header red">
+                        <i class="asterisk icon"></i>
+                        特别提醒
+                    </h3>
+
+                    <div class="ui segment">
+                        <a class="ui red right ribbon label">仅支持HTML5</a>
+                        <p>无法播放请使用：</p>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="four wide column ">
-            <h3 class="ui dividing header red">
-                <i class="cube icon"></i>
-                选集播放
-            </h3>
-            <div class="ui active centered inline loader" id="listLoader"></div>
-
-            <div class="ui center aligned segment spaced" id="playList">
-
-            </div>
-            <h3 class="ui dividing header red">
-                <i class="asterisk icon"></i>
-                特别提醒
-            </h3>
-
-            <div class="ui segment">
-                <a class="ui red right ribbon label">仅支持HTML5</a>
-                <p>无法播放请使用：</p>
-                <p>Edge(Win) | Safari(Mac) | 手机浏览器</p>
-            </div>
-        </div>
+        <div class="ui vertical divider"></div>
     </div>
-    <div class="ui hidden divider"></div>
 </div>
 <script th:inline="javascript">
     //分集信息
     var episodes = [[${episodes}]];
     //详细播放信息
     var urls = [[${urls}]]
+    var play = [[${play}]]
+
     var video = document.getElementById('mediaplayer');
     /** 初始化电视剧的分集信息 **/
     $(document).ready(function () {
@@ -151,15 +104,15 @@
                 var self = $(this);
                 self.attr("class", "bottom-space ui basic red loading button");
                 var vid = $(this).val();
-                var url = "/api/qq/" + vid;
+                console.log(vid)
+                var url = "/api/sohu/" + play + "/" + vid;
                 console.log("url:" + url)
                 $.get(url, function (data) {
                     $("#videoTitle").html("<i class='video play outline icon'></i>" + data.title);
-                    $("#mediaplayer").attr("src", data.playUrl);
-                    // $("#videoUrl").attr("data-value", data.value);
-                    // $("#videoImage").attr("src", data.image);
+                    $("#mediaplayer").attr("src", data.url);
+                    urls = data.urls
                     self.attr("class", "bottom-space ui basic red button");
-                    init(vid);
+                    init();
                 })
             });
         }
@@ -168,6 +121,7 @@
     var partSize = urls.length
 
     function init() {
+        console.log("重置")
         partList = new Array();
         currentPart = 0;
         var percent = 1 / parseInt(partSize) * 100;
@@ -183,6 +137,7 @@
             percent: percent
         });
     }
+
     //处理视频地址
     $(document).ready(function () {
         console.log("==============init2===============")

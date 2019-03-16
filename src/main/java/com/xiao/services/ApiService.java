@@ -37,8 +37,9 @@ public class ApiService {
     ApiSohuDao apiSohuDao;
 
     public String getSUVCookie(String movieUrl) {
-        if(CommonUtils.isEmpty(movieUrl)){
-            return "190313191758A3JT";
+        if (CommonUtils.isEmpty(movieUrl)) {
+            //测试 直接从浏览器找
+            return "1903161050452CP6";
         }
         String tParm = CommonUtils.timeSixtyBit();
         String url = getCookieUrl.replace("key", tParm) + movieUrl;
@@ -51,19 +52,18 @@ public class ApiService {
             Response response = okHttpUtils.doGetCall(url);
             Headers headers = response.headers();
             List<String> cookies = headers.values("set-cookie");
+            String suvCookie = "";
             for (String cookie : cookies) {
                 int length = cookie.indexOf("SUV");
-                if (length < 0) {
-                    continue;
+                if (length >= 0) {
+                    suvCookie = cookie;
+                    break;
                 }
-                String[] cos = cookie.split(";");
-                if (cos.length == 0) {
-                    continue;
-                }
-                cookie = cos[0];
-                log.info("cookie" + cookie);
-                suv = cookie.substring(5, cookie.length());
             }
+            String[] cos = suvCookie.split(";");
+            suvCookie = cos[0];
+            log.info("cookie" + suvCookie);
+            suv = suvCookie.substring(5, suvCookie.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,7 +114,7 @@ public class ApiService {
             Response response = okHttpUtils.doGetCall(infoUrl, parms);
             if (response.isSuccessful()) {
                 episodeText = response.body().string();
-                episodeText = episodeText.replace(callback+"(", "");
+                episodeText = episodeText.replace(callback + "(", "");
                 episodeText = episodeText.substring(0, episodeText.length() - 1);
             }
         } catch (IOException e) {

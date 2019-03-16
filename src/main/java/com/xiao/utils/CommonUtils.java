@@ -30,10 +30,5 @@ public class CommonUtils {
         return System.currentTimeMillis() + "";
     }
 
-    public static void main(String[] args) {
-         log.info(""+parseList(8));
-    }
-
-
 
 }
