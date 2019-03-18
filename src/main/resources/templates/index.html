@@ -72,7 +72,7 @@
         </h3>
         <button class="ui mini red button right-absolute refresh" value="12"><i class="refresh icon"></i>换一批</button>
     </div>
-    <div class="ui six column doubling grid">
+    <div class="ui four column doubling grid">
         <div class="column videoItem" th:each="movie, iterStat:${sohuTvs}">
             <div class="ui fluid link card">
                 <a class="image videoUrl" th:href="@{'/sohu/'+${movie.play}+'/'+${movie.vid}}" th:target="_blank">
