@@ -25,9 +25,6 @@ public class VideoBibiDataService {
         return videoBibiDataDao.findAll(page);
     }
 
-    public Integer inserIntoVideoBibi(VideoBibiData videoBibiData) {
-        return videoBibiDataDao.inserIntoVideoBibi(videoBibiData);
-    }
 
     public VideoBibiData getInfoByPage(Integer page) {
         return videoBibiDataDao.getInfoByPage(page);

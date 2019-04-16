@@ -89,7 +89,6 @@
     var video = document.getElementById('mediaplayer');
     /** 初始化电视剧的分集信息 **/
     $(document).ready(function () {
-        console.log("==============init1===============")
         if (episodes.length > 0) {
             //取消loader
             $("#listLoader").attr("class", "");
@@ -121,7 +120,6 @@
     var partSize = urls.length
 
     function init() {
-        console.log("重置")
         partList = new Array();
         currentPart = 0;
         var percent = 1 / parseInt(partSize) * 100;

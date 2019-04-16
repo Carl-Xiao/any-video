@@ -25,9 +25,9 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("video视频")
-                .description("carlVideo视频")
+                .description("video视频")
                 .termsOfServiceUrl("")
-                .contact("xx")
+                .contact("个人喜好视频")
                 .version("1.0")
                 .build();
     }
