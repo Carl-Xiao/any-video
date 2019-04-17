@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xiao.bean.Episode;
 import com.xiao.bean.VideoDrama;
 import com.xiao.dao.ApiSohuDao;
+import com.xiao.utils.CacheUtils;
 import com.xiao.utils.CommonUtils;
 import com.xiao.utils.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -33,13 +34,17 @@ public class ApiService {
     OkHttpUtils okHttpUtils;
 
     @Autowired
+    CacheUtils cacheUtils;
+
+    @Autowired
     ApiSohuDao apiSohuDao;
 
-    public String getSUVCookie(String movieUrl) {
-        if (CommonUtils.isEmpty(movieUrl)) {
-            //测试 直接从浏览器找
-            return "1903161050452CP6";
+    public String getSUVCookie() {
+        String suvKey = cacheUtils.getCache("suv");
+        if(!CommonUtils.isEmpty(suvKey)){
+            return suvKey;
         }
+        String movieUrl = "https://tv.sohu.com/";
         String tParm = CommonUtils.timeSixtyBit();
         String url = getCookieUrl.replace("key", tParm) + movieUrl;
         log.info("请求URL" + url);
@@ -67,15 +72,15 @@ public class ApiService {
             e.printStackTrace();
         }
         log.info("SUV:"+suv);
+        cacheUtils.putCache("suv",suv);
         return suv;
     }
-
     public Episode getInfo(String vid) {
         Episode episode = apiSohuDao.getEpisodeByVid(vid);
         if (episode != null) {
             return episode;
         }
-        String uid = getSUVCookie("");
+        String uid = getSUVCookie();
         Map<String, Object> parms = new HashMap<>();
         String utcTime = CommonUtils.timeUtcTime();
         String callback = "jsonpxkey_61_4".replace("key", utcTime);
@@ -107,7 +112,6 @@ public class ApiService {
         parms.put("_c", _c);
         parms.put("_", utcTime);
         parms.put("vid", vid);
-
         String episodeText = "";
         try {
             Response response = okHttpUtils.doGetCall(infoUrl, parms);
@@ -140,7 +144,6 @@ public class ApiService {
         apiSohuDao.insertIntoEpisode(episode);
         return episode;
     }
-
     public List<VideoDrama> epsiodes(String playList) {
         return apiSohuDao.dramaPlayEpsiodes(playList);
     }

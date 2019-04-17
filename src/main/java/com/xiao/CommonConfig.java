@@ -1,5 +1,6 @@
 package com.xiao;
 
+import com.xiao.utils.CacheUtils;
 import com.xiao.utils.OkHttpUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,5 +14,11 @@ public class CommonConfig {
     public OkHttpUtils okHttpUtils(){
         return new OkHttpUtils();
     }
+
+    @Bean
+    public CacheUtils cacheUtils(){
+        return new CacheUtils();
+    }
+
 
 }
