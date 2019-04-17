@@ -14,7 +14,6 @@ public class CacheUtils {
     public CacheUtils(){
         suvCacheBuilder.expireAfterAccess(3, TimeUnit.HOURS);
         suvCacheBuilder.expireAfterWrite(3, TimeUnit.HOURS);
-        suvCacheBuilder.refreshAfterWrite(1,TimeUnit.SECONDS);
         cache = suvCacheBuilder.build();
     }
     public void putCache(String key,String value){
